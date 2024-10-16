@@ -84,7 +84,7 @@ const Login = () => {
               </button>
             </form>
           ) : (
-            <h1 className="text-white text-5xl font-thin leading-tight md:w-3/5">
+            <h1 className="text-white text-5xl font-semibold font-mono leading-tight">
               'Connecting minds, creating futures.'
             </h1>
           )}
