@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { FaCheckCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom"; // For redirecting after login
+import axios from "axios";
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [isSignIn, setIsSignIn] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isSuccessModal, setIsSuccessModal] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -15,15 +18,55 @@ const Login = () => {
     setLoading(true);
     setError(null);
 
-    // Simulate API call with a timeout
-    setTimeout(() => {
-      if (username === "admin" && password === "password") {
-        navigate("/dashboard"); // Redirect to dashboard upon successful login
-      } else {
-        setError("Invalid username or password");
+    const data = {
+      email: username,
+      password: password,
+    };
+
+    console.log("Data: ", data);
+
+    try {
+      const response = await axios.post(
+        "https://bulletin-xi93.onrender.com/user/login/",
+        data
+      );
+
+      console.log("Response: ", response);
+
+      if (response?.data?.access) {
+        localStorage.setItem("access", response?.data?.access);
+        localStorage.setItem("username", response?.data?.user?.username);
+        localStorage.setItem("company", response?.data?.user?.company);
+        localStorage.setItem("email", response?.data?.user?.email);
+        localStorage.setItem("id", response?.data?.user?.id);
+        localStorage.setItem("designation", response?.data?.user?.designation);
+        console.log("localStorage is set...");
+        setIsSuccessModal(true);
+        onLogin();
+        
+        setTimeout(() => {
+          navigate("/home");
+          setIsSuccessModal(false);
+        }, 2000);
       }
+      // if (response.status == 404){
+      //   setError("Invalid credentials")
+      //   return;
+      // }
+    } catch (error) {
+      console.log("Error: ", error);
+    } finally {
       setLoading(false);
-    }, 1000); // Simulate network delay
+    }
+    // Simulate API call with a timeout
+    // setTimeout(() => {
+    //   if (username === "admin" && password === "password") {
+    //     navigate("/dashboard"); // Redirect to dashboard upon successful login
+    //   } else {
+    //     setError("Invalid username or password");
+    //   }
+    //   setLoading(false);
+    // }, 1000); // Simulate network delay
   };
 
   return (
@@ -98,11 +141,36 @@ const Login = () => {
           />
         </div>
       </section>
+      {isSuccessModal && <SuccessModal />}
     </div>
   );
 };
 
 export default Login;
+
+export function SuccessModal() {
+  return (
+    <div
+      // ref={modalRef}
+      // onClick={bgModal}
+      className="flex fixed justify-center w-screen h-screen left-0 top-0 p-5 text-white items-center backdrop-blur-lg z-[1000]"
+      data-aos="fade-in"
+    >
+      <div className="flex flex-col items-center gap-5 bg-gradient-to-r from-[#34104A] to-[#250939] p-10 rounded-3xl z-[1000]">
+        <div className="items-end justify-end flex w-full" data-aos="zoom-in">
+          {/* <button className="items-end justify-end flex ">
+            <IoClose onClick={closeModal} size={30} />
+          </button> */}
+        </div>
+        <FaCheckCircle color="green" size={50} />
+        {/* <i className="ri-close-circle-line text-7xl sm:text-8xl text-red-600"></i> */}
+        <p className="text-center text-[14px] sm:text-[18px]">
+          Login Successfull.
+        </p>
+      </div>
+    </div>
+  );
+}
 
 //   import styled from "styled-components";
 
