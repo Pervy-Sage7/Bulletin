@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,19 +22,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-@@n&m5lh3bz#8y7&v=z3!6g&w_ug=92c$d^#d^*=2_k+ne2-se'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
-# Application definition
+
+
 
 INSTALLED_APPS = [
-    'django.contrib.admin',  # Keep if you're using the admin
-    'django.contrib.auth',  # Keep if you want to use built-in Django auth (optional)
+    'django.contrib.admin',  
+    'django.contrib.auth',  
     'django.contrib.contenttypes',
-    'django.contrib.sessions',  # Keep if you need session management (optional)
+    'django.contrib.sessions', 
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',  # Can be removed if not using sessions
+    'django.contrib.sessions.middleware.SessionMiddleware',  
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -82,6 +82,18 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'bulletin',  # Ensure no special quotes are used here
+#         'USER': 'amalendu',
+#         'PASSWORD': '0101',
+#         'HOST': 'localhost',  # Use 'localhost' without 'jdbc:postgresql://'
+#         'PORT': '5432',  # Default PostgreSQL port
+#     }
+# }
+
+DATABASES["default"] = dj_database_url.parse("postgresql://bulletin_inb9_user:cZgzpbUgwxUpVypqfZqezvFuuLKUYuJA@dpg-cs8feilumphs73864ev0-a.oregon-postgres.render.com/bulletin_inb9")
 
 
 # Password validation
@@ -124,3 +136,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+from datetime import timedelta 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=24),  
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': False,
+}
