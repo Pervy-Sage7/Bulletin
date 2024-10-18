@@ -97,7 +97,7 @@ const Login = ({ onLogin }) => {
               }`}
             >
               <div>
-                <label className="block text-sm font-medium">Username</label>
+                <label className="block text-sm font-medium">Email</label>
                 <input
                   type="text"
                   value={username}
