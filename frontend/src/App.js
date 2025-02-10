@@ -6,8 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import "./App.css";
-import Header from "./components/Header";
-import Homepage from "./components/homepage";
+import Homepage from "./pages/homepage";
 import Login from "./components/Login";
 import { useEffect, useState } from "react";
 
@@ -36,16 +35,12 @@ function App() {
             path="/"
             element={<Login onLogin={() => setIsAuthenticated(true)} />}
           />
-          {/* element={isAuthenticated ? <Staking2 /> : <Navigate to="/login" />} */}
-
           <Route
             exact
             path="/home"
-            element={isAuthenticated ? <Homepage /> : <Navigate to="/" />}
+            element={<Homepage />}
+            // element={isAuthenticated ? <Homepage /> : <Navigate to="/" />}
           />
-
-          {/* <Login /> */}
-          {/* </Route> */}
         </Routes>
       </Router>
     </div>
