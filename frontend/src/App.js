@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import Homepage from "./pages/homepage";
-import Login from "./components/Login";
+import Login from "./pages/Login";
 import { useEffect, useState } from "react";
 
 function App() {

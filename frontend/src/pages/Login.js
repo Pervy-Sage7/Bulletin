@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // For redirecting after login
 import axios from "axios";
-import Header from "./Header";
-import { SuccessModal } from "./successModal";
+import Header from "../components/Header";
+import { SuccessModal } from "../components/successModal";
 
 const Login = ({ onLogin }) => {
   const [isSignIn, setIsSignIn] = useState(false);
@@ -61,8 +61,8 @@ const Login = ({ onLogin }) => {
     <div className="text-white">
       <Header isSignIn={isSignIn} setIsSignIn={() => setIsSignIn(!isSignIn)} />
 
-      <section className="flex flex-col sm:flex-row flex-wrap items-center justify-center sm:justify-between gap-10 w-full h-screen sm:p-16">
-        <div className="w-full md:w-1/2 p-3">
+      <section className="flex flex-col lg:flex-row items-center justify-center sm:justify-between gap-10 w-full h-screen md:p-16">
+        <div className="flex justify-center w-full md:w-1/2 p-3">
           {isSignIn ? (
             // Sign-In Form
             <form
@@ -74,6 +74,7 @@ const Login = ({ onLogin }) => {
               <div className="w-full">
                 <label className="block text-sm font-medium">Email</label>
                 <input
+                disabled={loading}
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -84,6 +85,7 @@ const Login = ({ onLogin }) => {
               <div>
                 <label className="block text-sm font-medium">Password</label>
                 <input
+                disabled={loading}
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

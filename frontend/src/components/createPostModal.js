@@ -129,8 +129,8 @@ export default function CreatePostModal({ onClose, onSuccess }) {
   };
   return (
     <div className="w-screen h-screen backdrop-blur-md fixed top-0 left-0 z-50">
-      <Modal>
-        <PostBox>
+      <Modal data-aos="fade-in">
+        <PostBox data-aos="zoom-in">
           <h2 className="text-2xl font-semibold mb-4">Create a Post</h2>
           <textarea
             value={newPost.text}
