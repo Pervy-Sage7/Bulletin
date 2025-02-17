@@ -19,7 +19,7 @@ export default function SideBar({ isSidebar, toggleSidebar }) {
       data-aos="fade-in"
     >
       {/* <div className="flex flex-col items-center justify-center border border-white" > */}
-      <div className="flex flex-col items-center gap-2 justify-center">
+      <div className="flex flex-col items-center gap-2 justify-center text-center">
         <img alt="adam" src="/images/adam.png" className="w-32"></img>
         <span className="font-mono">
           username:{" "}

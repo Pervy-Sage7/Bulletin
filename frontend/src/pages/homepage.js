@@ -9,6 +9,7 @@ import { RxAvatar } from "react-icons/rx";
 import { IoIosAdd, IoIosAddCircleOutline } from "react-icons/io";
 import { MutatingDots } from "react-loader-spinner";
 import { FaChevronRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function Homepage() {
   const [isCreatePostModal, setIsCreatePostModal] = useState(false);
@@ -19,21 +20,24 @@ export default function Homepage() {
   const [isErrorModal, setIsErrorModal] = useState(false);
   const [isSuccessModal, setSuccessModal] = useState(false);
   const [isSidebar, setIsSidebar] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchValue, setSearchValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isFetchingPosts, setIsFetchingPosts] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [successText, setSuccessText] = useState("");
   const [activeCommentSection, setActiveCommentSection] = useState(false);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const access = localStorage.getItem("access");
 
   useEffect(() => {
     fetchPosts();
   }, []);
+
+  useEffect(() => {
+    console.log("posts: ", posts);
+  }, [posts]);
 
   const fetchPosts = async () => {
     setIsFetchingPosts(true);
@@ -48,7 +52,7 @@ export default function Homepage() {
     // }
     try {
       const response = await axios.get(
-        `https://bulletin-xi93.onrender.com/user/allposts/search=${searchValue}`,
+        `https://bulletin-xi93.onrender.com/user/allposts/`,
         {
           headers: {
             Authorization: `Bearer ${access}`,
@@ -57,8 +61,8 @@ export default function Homepage() {
         }
       );
 
-      console.log("fetchPost response: ", response);
-      if (response?.data?.length > 0) {
+      // console.log("fetchPost response: ", response.data);
+      if (response?.data) {
         setPosts(response?.data);
       }
     } catch (error) {
@@ -158,18 +162,9 @@ export default function Homepage() {
     }
   };
 
-  useEffect(() => {
-    console.log("searchValue: ", searchValue);
-    fetchPosts();
-  }, [searchValue]);
-
   return (
     <div className="relative  w-screen h-full min-h-screen text-white">
-      <HomeHeader
-        isSidebar={() => setIsSidebar(!isSidebar)}
-        onSearchValueChange={(e) => setSearchValue(e.target.value)}
-        searchValue={searchValue}
-      />
+      <HomeHeader isSidebar={() => setIsSidebar(!isSidebar)} />
 
       <section className="max-w-3xl mx-auto p-6 space-y-6 mt-20 w-full">
         {isLoading ? (
@@ -192,7 +187,10 @@ export default function Homepage() {
               key={post.id}
               className="bg-gray-800 p-6 rounded-lg shadow-lg space-y-4"
             >
-              <div className="flex items-center space-x-4">
+              <div
+                className="flex items-center space-x-4 cursor-pointer"
+                onClick={() => navigate(`user/${post?.alumni?.username}`)}
+              >
                 {/* <img
                 src="/images/adam.png"
                 alt="Avatar"
@@ -204,11 +202,13 @@ export default function Homepage() {
               </div>
               <p>{post?.description}</p>
               {post?.image_link && (
-                <img
-                  src={post?.image_link}
-                  alt="Post Content"
-                  className="rounded-lg"
-                />
+                <div className="flex w-full max-h-96 justify-center items-center object-contain bg-black bg-opacity-30 p-1 rounded-lg overflow-hidden">
+                  <img
+                    src={post?.image_link}
+                    alt="Post Content"
+                    className="object-contain aspect-auto"
+                  />
+                </div>
               )}
               {post?.video_link && (
                 <video
@@ -228,18 +228,47 @@ export default function Homepage() {
                   className="text-yellow-300 hover:text-yellow-400"
                   onClick={() => setActiveCommentSection(post?.id)}
                 >
-                  💬 {post.comments.length || 0} Comments
+                  💬 {post?.comments?.length || 0} Comments
                 </button>
               </div>
 
               {/* Comment section */}
               <div className="space-y-2">
                 {post?.comments?.length > 0 ? (
-                  post?.comments?.map((comment, index) => (
-                    <p key={index} className="text-gray-400">
-                      {comment?.comment_text}
-                    </p>
-                  ))
+                  post?.comments
+                    ?.slice(-4)
+                    .reverse()
+                    .map((comment, index) => (
+                      <div className="flex justify-between p-2 rounded-lg bg-black bg-opacity-20">
+                        <p key={index} className="text-gray-400">
+                          {comment?.comment_text}
+                        </p>
+                        <div className="flex gap-2 items-center justify-center">
+                          <span className="text-[12px] text-slate-400">
+                            {new Date(comment?.posted_date).toLocaleString(
+                              "en-GB",
+                              {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                              }
+                            )}
+                          </span>
+                          <div className="flex w-[1px] h-full bg-slate-200 "></div>
+                          <span className="text-[12px] text-slate-400">
+                            {new Date(comment?.posted_date).toLocaleTimeString(
+                              "en-US",
+                              {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                second: "2-digit",
+                                hour12: true, // For AM/PM format
+                              }
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    ))
                 ) : (
                   <span>No comments...</span>
                 )}

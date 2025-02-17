@@ -9,6 +9,7 @@ import "./App.css";
 import Homepage from "./pages/homepage";
 import Login from "./pages/Login";
 import { useEffect, useState } from "react";
+import UserPage from "./pages/userPage";
 
 function App() {
   // const [access, setAccess] = useState();
@@ -30,15 +31,21 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route
+          {/* <Route
             exact
             path="/"
             element={<Login onLogin={() => setIsAuthenticated(true)} />}
+          /> */}
+          <Route
+            exact
+            path="/"
+            // element={<Homepage />}
+            element={isAuthenticated ? <Homepage /> : <Login/>}
           />
           <Route
             exact
-            path="/home"
-            element={<Homepage />}
+            path="/user/:username"
+            element={<UserPage />}
             // element={isAuthenticated ? <Homepage /> : <Navigate to="/" />}
           />
         </Routes>
