@@ -90,7 +90,7 @@ export default function HomeHeader({ isSidebar }) {
                   strokeWidth="5"
                   animationDuration="0.75"
                   ariaLabel="rotating-lines-loading"
-                  wrapperStyle={{color:"black"}}
+                  wrapperStyle={{ color: "black" }}
                   wrapperClass=""
                 />
               ) : (
@@ -107,11 +107,11 @@ export default function HomeHeader({ isSidebar }) {
             <div className="absolute flex flex-col gap-3 top-full left-0 bg-black rounded-lg p-5 px-10 w-64">
               {users?.map((user, index) => (
                 <div
-                  className="flex cursor-pointer"
+                  className="flex gap-3 cursor-pointer"
                   onClick={() => navigate(`/user/${user?.username}`)}
                 >
                   <div className="flex items-center justify-center p-1 rounded-full">
-                    {user?.profile_picture_url ? (
+                    {/* {user?.profile_picture_url ? (
                       <img
                         alt={user?.id}
                         src={user?.profile_picture_url}
@@ -119,12 +119,13 @@ export default function HomeHeader({ isSidebar }) {
                       />
                     ) : (
                       <RxAvatar size={50} />
-                    )}
+                    )} */}
+                    <RxAvatar size={40} />
                   </div>
                   <div className="flex flex-col">
                     <span className="font-semibold">{user?.username}</span>
                     {/* <span>|</span> */}
-                    <span className="font-light text-[12px]">
+                    <span className="font-light text-[10px]">
                       {user?.company}
                     </span>
                   </div>
