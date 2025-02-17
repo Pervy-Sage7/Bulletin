@@ -151,36 +151,34 @@ export default function UserPage() {
                 </div>
               </div>
               <div className="flex items-center justify-center">
-                <div className="flex flex-col flex-wrap gap-">
-                  <span className="font-bold">
+                <div className="flex flex-col text-slate-300 font-extralight">
+                  <span>
                     Company:{" "}
-                    <span className="font-extralight text-slate-300">
+                    <span className="font-bold text-white">
                       {userData?.alumni?.company}
                     </span>
                   </span>
                   <div className="w-[1px] bg-white "></div>
-                  <span className="font-bold">
+                  <span>
                     Designation:{" "}
-                    <span className="font-extralight text-slate-300">
+                    <span className="font-bold text-white">
                       {userData?.alumni?.designation}
                     </span>
                   </span>
                   <div className="w-[1px] bg-white "></div>
 
-                  <span className="font-bold">
-                    Age:{" "}
-                    <span className="font-extralight text-slate-300">21</span>
+                  <span>
+                    Age: <span className="font-bold text-white">21</span>
                   </span>
                   <div className="w-[1px] bg-white "></div>
-                  <span className="font-bold">
-                    Gender:{" "}
-                    <span className="font-extralight text-slate-300">Male</span>
+                  <span>
+                    Gender: <span className="font-bold text-white">Male</span>
                   </span>
                   <div className="w-[1px] bg-white "></div>
 
-                  <span className="font-bold">
+                  <span>
                     E-mail:{" "}
-                    <span className="font-extralight text-slate-300">
+                    <span className="font-bold text-white">
                       {userData?.alumni?.email}
                     </span>
                   </span>
@@ -263,7 +261,7 @@ export default function UserPage() {
                   <div className="space-y-2">
                     {post?.post?.comments?.length > 0 ? (
                       post?.post?.comments
-                        ?.slice(-4)
+                        ?.slice(-3)
                         .reverse()
                         .map((comment, index) => (
                           <div className="flex justify-between p-2 rounded-lg bg-black bg-opacity-20">
@@ -271,17 +269,6 @@ export default function UserPage() {
                               {comment?.comment_text}
                             </p>
                             <div className="flex gap-2 items-center justify-center">
-                              <span className="text-[12px] text-slate-400">
-                                {new Date(comment?.posted_date).toLocaleString(
-                                  "en-GB",
-                                  {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric",
-                                  }
-                                )}
-                              </span>
-                              <div className="flex w-[1px] h-full bg-slate-200 "></div>
                               <span className="text-[12px] text-slate-400">
                                 {new Date(
                                   comment?.posted_date
@@ -291,6 +278,18 @@ export default function UserPage() {
                                   second: "2-digit",
                                   hour12: true, // For AM/PM format
                                 })}
+                              </span>
+                              <div className="flex w-[1px] h-full bg-slate-200 "></div>
+
+                              <span className="text-[12px] text-slate-400">
+                                {new Date(comment?.posted_date).toLocaleString(
+                                  "en-GB",
+                                  {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                  }
+                                )}
                               </span>
                             </div>
                           </div>

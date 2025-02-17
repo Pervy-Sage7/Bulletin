@@ -43,13 +43,13 @@ export default function Homepage() {
     setIsFetchingPosts(true);
     setIsLoading(true);
 
-    // if (!access) {
-    //   setErrorText("Access key not found.");
-    //   setIsErrorModal(true);
-    //   setIsFetchingPosts(false);
-    //   setIsLoading(false);
-    //   return;
-    // }
+    if (!access) {
+      setErrorText("Access key not found.");
+      setIsErrorModal(true);
+      setIsFetchingPosts(false);
+      setIsLoading(false);
+      return;
+    }
     try {
       const response = await axios.get(
         `https://bulletin-xi93.onrender.com/user/allposts/`,
@@ -236,7 +236,7 @@ export default function Homepage() {
               <div className="space-y-2">
                 {post?.comments?.length > 0 ? (
                   post?.comments
-                    ?.slice(-4)
+                    ?.slice(-3)
                     .reverse()
                     .map((comment, index) => (
                       <div className="flex justify-between p-2 rounded-lg bg-black bg-opacity-20">
@@ -244,17 +244,6 @@ export default function Homepage() {
                           {comment?.comment_text}
                         </p>
                         <div className="flex gap-2 items-center justify-center">
-                          <span className="text-[12px] text-slate-400">
-                            {new Date(comment?.posted_date).toLocaleString(
-                              "en-GB",
-                              {
-                                day: "2-digit",
-                                month: "short",
-                                year: "numeric",
-                              }
-                            )}
-                          </span>
-                          <div className="flex w-[1px] h-full bg-slate-200 "></div>
                           <span className="text-[12px] text-slate-400">
                             {new Date(comment?.posted_date).toLocaleTimeString(
                               "en-US",
@@ -266,13 +255,25 @@ export default function Homepage() {
                               }
                             )}
                           </span>
+                          <div className="flex w-[1px] h-full bg-slate-200 "></div>
+
+                          <span className="text-[12px] text-slate-400">
+                            {new Date(comment?.posted_date).toLocaleString(
+                              "en-GB",
+                              {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                              }
+                            )}
+                          </span>
                         </div>
                       </div>
                     ))
                 ) : (
                   <span>No comments...</span>
                 )}
-                {activeCommentSection == post?.id && (
+                {activeCommentSection === post?.id && (
                   <div className="flex space-x-2">
                     <input
                       type="text"

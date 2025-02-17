@@ -1,48 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export default function SideBar({ isSidebar, toggleSidebar }) {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("userData"))
+  );
+
+  useEffect(() => {
+    console.log("sideBar: ", userData);
+  }, [userData]);
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/");
+    window.location.reload();
   };
 
   return (
     <div
-      className={`fixed top-[15rem] w-72 bg-black sm:bg-white bg-opacity-100 sm:bg-opacity-10 p-5 rounded-r-2xl transition-all duration-500 ${
+      className={`fixed top-[15rem] w-72 bg-black lg:bg-white bg-opacity-100 lg:bg-opacity-10 p-5 rounded-r-2xl transition-all duration-500 ${
         isSidebar ? "left-0" : "hidden"
       }`}
-      style={{border:"solid white"}}
+      style={{ border: "solid white" }}
       data-aos="fade-in"
     >
       {/* <div className="flex flex-col items-center justify-center border border-white" > */}
-      <div className="flex flex-col items-center gap-2 justify-center text-center">
-        <img alt="adam" src="/images/adam.png" className="w-32"></img>
+      <div className="flex flex-col items-center gap-2 justify-center text-center text-slate-300">
+        <img
+          alt="adam"
+          src="/images/adam.png"
+          // src={userData?.profile_picture_url || "/images/adam.png"}
+          className="w-32"
+        ></img>
         <span className="font-mono">
           username:{" "}
-          <span className="font-semibold">
-            {localStorage.getItem("username") || "Adam"}
+          <span className="font-semibold text-white">
+            {userData?.username || "Adam"}
           </span>
         </span>
         <span className="font-mono ">
           email:{" "}
-          <span className="font-semibold">
-            {localStorage.getItem("email") || "Adam"}
+          <span className="font-semibold text-white">
+            {userData?.email || "Adam"}
           </span>
         </span>
         <span className="font-mono ">
           company:{" "}
-          <span className="font-semibold">
-            {localStorage.getItem("company") || "Adam"}
+          <span className="font-semibold text-white">
+            {userData?.company || "Adam"}
           </span>
         </span>
         <span className="font-mono ">
           designation:{" "}
-          <span className="font-semibold">
-            {localStorage.getItem("designation") || "Adam"}
+          <span className="font-semibold text-white">
+            {userData?.designation || "Adam"}
           </span>
         </span>
         {/* <span className="font-mono font-semibold">email: {localStorage.getItem("email") || "Adam"}</span>
@@ -56,11 +68,13 @@ export default function SideBar({ isSidebar, toggleSidebar }) {
         >
           Logout
         </button>
-      {/* </div> */}
+        {/* </div> */}
       </div>
-      <div className="absolute right-0 top-[50%] cursor-pointer" onClick={toggleSidebar} >
-      <FaChevronLeft size={30}/>
-
+      <div
+        className="absolute right-0 top-[50%] cursor-pointer"
+        onClick={toggleSidebar}
+      >
+        <FaChevronLeft size={30} />
       </div>
     </div>
   );

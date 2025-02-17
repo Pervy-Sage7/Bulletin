@@ -1,6 +1,5 @@
 import {
   BrowserRouter as Router,
-  Switch,
   Route,
   Routes,
   Navigate,
@@ -45,8 +44,8 @@ function App() {
           <Route
             exact
             path="/user/:username"
-            element={<UserPage />}
-            // element={isAuthenticated ? <Homepage /> : <Navigate to="/" />}
+            // element={<UserPage />}
+            element={isAuthenticated ? <UserPage /> : <Navigate to="/" />}
           />
         </Routes>
       </Router>

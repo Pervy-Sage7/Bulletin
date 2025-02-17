@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // For redirecting after login
 import axios from "axios";
 import Header from "../components/Header";
 import { SuccessModal } from "../components/successModal";
@@ -11,7 +10,7 @@ const Login = ({ onLogin }) => {
   const [loading, setLoading] = useState(false);
   const [isSuccessModal, setIsSuccessModal] = useState(false);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Simulating API call for user verification
   const handleLogin = async (e) => {
@@ -35,19 +34,13 @@ const Login = ({ onLogin }) => {
       console.log("Response: ", response);
 
       if (response?.data?.access) {
+        localStorage.setItem("userData", JSON.stringify(response?.data?.user))
         localStorage.setItem("access", response?.data?.access);
-        localStorage.setItem("username", response?.data?.user?.username);
-        localStorage.setItem("company", response?.data?.user?.company);
-        localStorage.setItem("email", response?.data?.user?.email);
-        localStorage.setItem("id", response?.data?.user?.id);
-        localStorage.setItem("designation", response?.data?.user?.designation);
-        console.log("localStorage is set...");
         setIsSuccessModal(true);
-        onLogin();
 
         setTimeout(() => {
-          navigate("/home");
           setIsSuccessModal(false);
+          window.location.reload();
         }, 2000);
       }
     } catch (error) {

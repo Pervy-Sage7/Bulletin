@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
+import { RotatingLines } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 
 export default function HomeHeader({ isSidebar }) {
@@ -15,7 +16,6 @@ export default function HomeHeader({ isSidebar }) {
 
   const access = localStorage.getItem("access");
   const navigate = useNavigate();
-
 
   const fetchUsers = async () => {
     setIsLoading(true);
@@ -80,12 +80,27 @@ export default function HomeHeader({ isSidebar }) {
             className="p-2 px-4 rounded-full outline-none sm:w-96 text-black bg-opacity-80 bg-white"
           />
           {searchValue && (
-            <IoIosCloseCircleOutline
-              size={20}
-              color="black"
-              className="absolute right-3 top-3 cursor-pointer"
-              onClick={() => setSearchValue("")}
-            />
+            <div className="absolute right-3 top-3 cursor-pointer">
+              {isLoading ? (
+                <RotatingLines
+                  visible={true}
+                  height="20"
+                  width="20"
+                  color="black"
+                  strokeWidth="5"
+                  animationDuration="0.75"
+                  ariaLabel="rotating-lines-loading"
+                  wrapperStyle={{color:"black"}}
+                  wrapperClass=""
+                />
+              ) : (
+                <IoIosCloseCircleOutline
+                  size={20}
+                  color="black"
+                  onClick={() => setSearchValue("")}
+                />
+              )}
+            </div>
           )}
 
           {users?.length > 0 && (
