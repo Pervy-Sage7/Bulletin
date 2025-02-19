@@ -31,7 +31,13 @@ export default function UserPage() {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `https://bulletin-xi93.onrender.com/user/alumni/?username=${username}`
+        `https://bulletin-xi93.onrender.com/user/alumni/?username=${username}`,
+        {
+          headers: {
+            Authorization: `Bearer ${access}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
 
       //   console.log("fetchUser response: ", response.data);

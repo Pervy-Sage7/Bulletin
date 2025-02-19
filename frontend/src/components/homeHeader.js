@@ -17,13 +17,13 @@ export default function HomeHeader({ isSidebar }) {
   const access = localStorage.getItem("access");
   const navigate = useNavigate();
 
-  const fetchUsers = async () => {
+  const fetchUsers = async () => {  
     setIsLoading(true);
 
-    // if (!access) {
-    //   setErrorText("Access key not found.");
-    //   setIsErrorModal(true);
-    //   setIsFetchingPosts(false);
+    // if (!access) { 
+    //   setErrorText("Access key not found."); 
+    //   setIsErrorModal(true); 
+    //   setIsFetchingPosts(false); 
     //   setIsLoading(false);
     //   return;
     // }
