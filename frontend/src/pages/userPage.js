@@ -270,35 +270,47 @@ export default function UserPage() {
                         ?.slice(-3)
                         .reverse()
                         .map((comment, index) => (
-                          <div className="flex justify-between p-2 rounded-lg bg-black bg-opacity-20">
-                            <p key={index} className="text-gray-400">
-                              {comment?.comment_text}
-                            </p>
-                            <div className="flex gap-2 items-center justify-center">
-                              <span className="text-[12px] text-slate-400">
-                                {new Date(
-                                  comment?.posted_date
-                                ).toLocaleTimeString("en-US", {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                  second: "2-digit",
-                                  hour12: true, // For AM/PM format
-                                })}
-                              </span>
-                              <div className="flex w-[1px] h-full bg-slate-200 "></div>
-
-                              <span className="text-[12px] text-slate-400">
-                                {new Date(comment?.posted_date).toLocaleString(
-                                  "en-GB",
-                                  {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric",
-                                  }
-                                )}
-                              </span>
-                            </div>
-                          </div>
+                          <div className="flex gap-2 p-2 rounded-lg bg-black bg-opacity-20 w-full">
+                                                  <div className="w-">
+                                                    <RxAvatar size={30} />
+                                                  </div>
+                                                  <div className="flex flex-col gap- w-full">
+                                                    <div className="flex justify-between">
+                                                      <span className="text-[16px] font-semibold">
+                                                        {comment?.alumni_username}
+                                                      </span>
+                                                      <div className="flex gap-2 items-center justify-center">
+                                                        <span className="text-[10px] sm:text-[12px] text-slate-400">
+                                                          {new Date(
+                                                            comment?.posted_date
+                                                          ).toLocaleTimeString("en-US", {
+                                                            hour: "2-digit",
+                                                            minute: "2-digit",
+                                                            second: "2-digit",
+                                                            hour12: true, // For AM/PM format
+                                                          })}
+                                                        </span>
+                                                        <div className="flex w-[1px] h-[80%] bg-slate-200 "></div>
+                          
+                                                        <span className="text-[10px] sm:text-[12px] text-slate-400">
+                                                          {new Date(comment?.posted_date).toLocaleString(
+                                                            "en-GB",
+                                                            {
+                                                              day: "2-digit",
+                                                              month: "short",
+                                                              year: "numeric",
+                                                            }
+                                                          )}
+                                                        </span>
+                                                      </div>
+                                                    </div>
+                                                    <div>
+                                                      <p key={index} className="text-[14px]  text-gray-400">
+                                                        {comment?.comment_text}
+                                                      </p>
+                                                    </div>
+                                                  </div>
+                                                </div>
                         ))
                     ) : (
                       <span>No comments...</span>

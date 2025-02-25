@@ -36,6 +36,23 @@ export default function Homepage() {
   }, []);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 500px)"); // Adjust the width as per your requirement
+
+    const handleChange = (e) => {
+      setIsSidebar(!e.matches); // Invert the value when screen size changes
+    };
+
+    // Set initial value based on screen size
+    setIsSidebar(!mediaQuery.matches);
+
+    // Add event listener
+    mediaQuery.addEventListener("change", handleChange);
+
+    // Cleanup event listener on unmount
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  useEffect(() => {
     console.log("posts: ", posts);
   }, [posts]);
 
@@ -166,7 +183,7 @@ export default function Homepage() {
     <div className="relative  w-screen h-full min-h-screen text-white">
       <HomeHeader isSidebar={() => setIsSidebar(!isSidebar)} />
 
-      <section className="max-w-3xl mx-auto p-6 space-y-6 mt-20 w-full">
+      <section className="max-w-3xl mx-auto p-3 sm:p-6 space-y-6 mt-20 w-full">
         {isLoading ? (
           <div className="flex justify-center">
             <MutatingDots
@@ -185,10 +202,10 @@ export default function Homepage() {
           posts.map((post) => (
             <div
               key={post.id}
-              className="bg-gray-800 p-6 rounded-lg shadow-lg space-y-4"
+              className="bg-gray-800 p-4 sm:p-6 rounded-lg shadow-lg space-y-4"
             >
               <div
-                className="flex items-center space-x-4 cursor-pointer"
+                className="flex items-center space-x-4 cursor-pointer hover:underline"
                 onClick={() => navigate(`user/${post?.alumni?.username}`)}
               >
                 {/* <img
@@ -198,9 +215,9 @@ export default function Homepage() {
               /> */}
                 <RxAvatar size={50} />
 
-                <span className="font-semibold">{post?.alumni?.username}</span>
+                <span className="font-semibold ">{post?.alumni?.username}</span>
               </div>
-              <p>{post?.description}</p>
+              <p className="text-slate-300">{post?.description}</p>
               {post?.image_link && (
                 <div className="flex w-full max-h-96 justify-center items-center object-contain bg-black bg-opacity-30 p-1 rounded-lg overflow-hidden">
                   <img
@@ -239,34 +256,45 @@ export default function Homepage() {
                     ?.slice(-3)
                     .reverse()
                     .map((comment, index) => (
-                      <div className="flex justify-between p-2 rounded-lg bg-black bg-opacity-20">
-                        <p key={index} className="text-gray-400">
-                          {comment?.comment_text}
-                        </p>
-                        <div className="flex gap-2 items-center justify-center">
-                          <span className="text-[12px] text-slate-400">
-                            {new Date(comment?.posted_date).toLocaleTimeString(
-                              "en-US",
-                              {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                second: "2-digit",
-                                hour12: true, // For AM/PM format
-                              }
-                            )}
-                          </span>
-                          <div className="flex w-[1px] h-full bg-slate-200 "></div>
+                      <div className="flex gap-2 p-2 rounded-lg bg-black bg-opacity-20 w-full">
+                        <div className="w-">
+                          <RxAvatar size={30} />
+                        </div>
+                        <div className="flex flex-col gap- w-full">
+                          <div className="flex justify-between">
+                            <span className="text-[16px] font-semibold">
+                              {comment?.alumni_username}
+                            </span>
+                            <div className="flex gap-2 items-center justify-center">
+                              <span className="text-[10px] sm:text-[12px] text-slate-400">
+                                {new Date(
+                                  comment?.posted_date
+                                ).toLocaleTimeString("en-US", {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                  second: "2-digit",
+                                  hour12: true, // For AM/PM format
+                                })}
+                              </span>
+                              <div className="flex w-[1px] h-[80%] bg-slate-200 "></div>
 
-                          <span className="text-[12px] text-slate-400">
-                            {new Date(comment?.posted_date).toLocaleString(
-                              "en-GB",
-                              {
-                                day: "2-digit",
-                                month: "short",
-                                year: "numeric",
-                              }
-                            )}
-                          </span>
+                              <span className="text-[10px] sm:text-[12px] text-slate-400">
+                                {new Date(comment?.posted_date).toLocaleString(
+                                  "en-GB",
+                                  {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                  }
+                                )}
+                              </span>
+                            </div>
+                          </div>
+                          <div>
+                            <p key={index} className="text-[14px]  text-gray-400">
+                              {comment?.comment_text}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     ))
