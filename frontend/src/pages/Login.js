@@ -34,7 +34,7 @@ const Login = ({ onLogin }) => {
       console.log("Response: ", response);
 
       if (response?.data?.access) {
-        localStorage.setItem("userData", JSON.stringify(response?.data?.user))
+        localStorage.setItem("userData", JSON.stringify(response?.data?.user));
         localStorage.setItem("access", response?.data?.access);
         setIsSuccessModal(true);
 
@@ -45,6 +45,10 @@ const Login = ({ onLogin }) => {
       }
     } catch (error) {
       console.log("Error: ", error);
+      // console.log(error?.response?.data?.error);
+      if (error?.response?.data?.error) {
+        setError(error?.response?.data?.error);
+      }
     } finally {
       setLoading(false);
     }
@@ -67,7 +71,7 @@ const Login = ({ onLogin }) => {
               <div className="w-full">
                 <label className="block text-sm font-medium">Email</label>
                 <input
-                disabled={loading}
+                  disabled={loading}
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -78,7 +82,7 @@ const Login = ({ onLogin }) => {
               <div>
                 <label className="block text-sm font-medium">Password</label>
                 <input
-                disabled={loading}
+                  disabled={loading}
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

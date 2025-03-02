@@ -116,7 +116,7 @@ export default function Homepage() {
       setPosts((prevPosts) =>
         prevPosts.map((post) =>
           post.id === postId
-            ? { ...post, likes: response.data.likes_count }
+            ? { ...post, likes_count: response.data.likes_count }
             : post
         )
       );
@@ -239,7 +239,7 @@ export default function Homepage() {
                   onClick={() => handleLike(post.id)}
                   className="text-yellow-300 hover:text-yellow-400"
                 >
-                  ❤️ {post?.likes > 0 ? post?.likes : 0} Likes
+                  ❤️ {post?.likes_count > 0 ? post?.likes_count : 0} Likes
                 </button>
                 <button
                   className="text-yellow-300 hover:text-yellow-400"
