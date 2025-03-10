@@ -19,7 +19,9 @@ export default function Homepage() {
   const [isCommentLoading, setIsCommentLoading] = useState(false);
   const [isErrorModal, setIsErrorModal] = useState(false);
   const [isSuccessModal, setSuccessModal] = useState(false);
-  const [isSidebar, setIsSidebar] = useState(true);
+  const [isSidebar, setIsSidebar] = useState(
+    window.innerWidth > 500 ? true : false
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const [isFetchingPosts, setIsFetchingPosts] = useState(false);
@@ -228,7 +230,7 @@ export default function Homepage() {
               </div>
               <p className="text-slate-300">{post?.description}</p>
               {post?.image_link && (
-                <div className="flex w-full max-h-96 justify-center items-center object-contain bg-black bg-opacity-30 p-1 rounded-lg overflow-hidden">
+                <div className="flex w-full max-h-96 justify-center items-center bg-black bg-opacity-30 p-1 rounded-lg overflow-auto">
                   <img
                     src={post?.image_link}
                     alt="Post Content"
