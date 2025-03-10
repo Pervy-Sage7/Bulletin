@@ -213,7 +213,16 @@ export default function Homepage() {
                 alt="Avatar"
                 className="w-12 h-12 rounded-full"
               /> */}
-                <RxAvatar size={50} />
+                {post?.alumni?.profile_picture_url ? (
+                  <img
+                    src={post?.alumni?.profile_picture_url}
+                    alt="profile"
+                    className="w-14 h-14 rounded-full object-cover"
+                  />
+                ) : (
+                  <RxAvatar size={50} />
+                )}
+                {/* <RxAvatar size={50} /> */}
 
                 <span className="font-semibold ">{post?.alumni?.username}</span>
               </div>
@@ -257,9 +266,18 @@ export default function Homepage() {
                     .reverse()
                     .map((comment, index) => (
                       <div className="flex gap-2 p-2 rounded-lg bg-black bg-opacity-20 w-full">
-                        <div className="w-">
+                        {comment?.alumni?.profile_picture_url ? (
+                          <img
+                            src={comment?.alumni?.profile_picture_url}
+                            alt="profile"
+                            className="w-8 h-8 rounded-full object-cover"
+                          />
+                        ) : (
                           <RxAvatar size={30} />
-                        </div>
+                        )}
+                        {/* <div className="w-">
+                          <RxAvatar size={30} />
+                        </div> */}
                         <div className="flex flex-col gap- w-full">
                           <div className="flex justify-between">
                             <span className="text-[16px] font-semibold">
@@ -291,7 +309,10 @@ export default function Homepage() {
                             </div>
                           </div>
                           <div>
-                            <p key={index} className="text-[14px]  text-gray-400">
+                            <p
+                              key={index}
+                              className="text-[14px]  text-gray-400"
+                            >
                               {comment?.comment_text}
                             </p>
                           </div>

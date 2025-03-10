@@ -21,7 +21,7 @@ export default function UserPage() {
   useEffect(() => {
     console.log("searParam: ", username);
     fetchUser();
-  }, [username]);
+  }, []);
 
   useEffect(() => {
     console.log("userData: ", userData);
@@ -145,7 +145,7 @@ export default function UserPage() {
                   <img
                     src={userData?.alumni?.profile_picture_url}
                     alt="profile"
-                    className=""
+                    className="w-28 h-28 rounded-full object-cover"
                   />
                 ) : (
                   <RxAvatar size={60} />
@@ -236,7 +236,10 @@ export default function UserPage() {
                           onClick={() => handleLike(post?.post?.id)}
                           className="text-yellow-300 hover:text-yellow-400"
                         >
-                          ❤️ {post?.post?.likes_count > 0 ? post?.post?.likes_count : 0}{" "}
+                          ❤️{" "}
+                          {post?.post?.likes_count > 0
+                            ? post?.post?.likes_count
+                            : 0}{" "}
                           Likes
                         </button>
                         <button
@@ -271,9 +274,18 @@ export default function UserPage() {
                         .reverse()
                         .map((comment, index) => (
                           <div className="flex gap-2 p-2 rounded-lg bg-black bg-opacity-20 w-full">
-                            <div className="w-">
+                            {comment?.alumni?.profile_picture_url ? (
+                              <img
+                                src={comment?.alumni?.profile_picture_url}
+                                alt="profile"
+                                className="w-8 h-8 rounded-full object-cover"
+                              />
+                            ) : (
                               <RxAvatar size={30} />
-                            </div>
+                            )}
+                            {/* <div className="w-">
+                              <RxAvatar size={30} />
+                            </div> */}
                             <div className="flex flex-col gap- w-full">
                               <div className="flex justify-between">
                                 <span className="text-[16px] font-semibold">

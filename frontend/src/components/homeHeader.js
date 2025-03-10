@@ -111,16 +111,16 @@ export default function HomeHeader({ isSidebar }) {
                   onClick={() => navigate(`/user/${user?.username}`)}
                 >
                   <div className="flex items-center justify-center p-1 rounded-full">
-                    {/* {user?.profile_picture_url ? (
+                    {user?.profile_picture_url ? (
                       <img
                         alt={user?.id}
                         src={user?.profile_picture_url}
                         className="w-10 h-10 rounded-full"
                       />
                     ) : (
-                      <RxAvatar size={50} />
-                    )} */}
-                    <RxAvatar size={40} />
+                      <RxAvatar size={40} />
+                    )}
+                    {/* <RxAvatar size={40} /> */}
                   </div>
                   <div className="flex flex-col">
                     <span className="font-semibold">{user?.username}</span>

@@ -29,30 +29,31 @@ export default function SideBar({ isSidebar, toggleSidebar }) {
       <div className="flex flex-col items-center gap-2 justify-center text-center text-slate-300">
         <img
           alt="adam"
-          src="/images/adam.png"
+          src={userData?.profile_picture_url || "/images/adam.png"}
           // src={userData?.profile_picture_url || "/images/adam.png"}
-          className="w-32"
+          className="w-24 h-24 rounded-full cursor-pointer"
+          onClick={() => navigate(`/user/${userData?.username}`)}
         ></img>
         <span className="font-mono">
-          username:{" "}
+          Username:{" "}
           <span className="font-semibold text-white">
             {userData?.username || "Adam"}
           </span>
         </span>
         <span className="font-mono ">
-          email:{" "}
+          Email:{" "}
           <span className="font-semibold text-white">
             {userData?.email || "Adam"}
           </span>
         </span>
         <span className="font-mono ">
-          company:{" "}
+          Company:{" "}
           <span className="font-semibold text-white">
             {userData?.company || "Adam"}
           </span>
         </span>
         <span className="font-mono ">
-          designation:{" "}
+          Designation:{" "}
           <span className="font-semibold text-white">
             {userData?.designation || "Adam"}
           </span>
