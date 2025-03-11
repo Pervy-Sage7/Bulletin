@@ -117,7 +117,7 @@ const Login = ({ onLogin }) => {
           />
         </div>
       </section>
-      {isSuccessModal && <SuccessModal text="Login Successfull" />}
+      {isSuccessModal && <SuccessModal text="Login Successful" />}
     </div>
   );
 };
